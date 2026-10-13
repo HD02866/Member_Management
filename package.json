@@ -1,0 +1,61 @@
+{
+  "name": "waanofii",
+  "version": "1.0.0",
+  "description": "Multi-Tenant Membership SaaS Platform",
+  "main": "index.js",
+  "workspaces": [
+    "apps/web"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:web": "npm run build --workspace=apps/web",
+    "start": "node dist/main.js",
+    "start:dev": "tsx watch src/main.ts",
+    "dev:api": "tsx watch src/main.ts",
+    "dev:web": "npm run dev --workspace=apps/web",
+    "test": "tsx tests/run_all_tests.ts",
+    "test:db": "tsx tests/run_database_tests.ts",
+    "test:backend": "tsx tests/run_backend_tests.ts",
+    "test:phase4": "tsx tests/run_phase4_tests.ts",
+    "seed": "tsx prisma/seed.ts"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^12.1.1",
+    "@nestjs/config": "^12.0.1",
+    "@nestjs/core": "^12.1.1",
+    "@nestjs/jwt": "^12.0.2",
+    "@nestjs/passport": "^12.0.0",
+    "@nestjs/platform-express": "^12.1.1",
+    "@nestjs/throttler": "^6.7.1",
+    "@prisma/client": "^6.19.3",
+    "argon2": "^0.45.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "cookie-parser": "^1.4.7",
+    "helmet": "^8.3.0",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "uuid": "^14.0.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "^12.1.1",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.3",
+    "@types/passport-jwt": "^4.0.1",
+    "@types/supertest": "^7.2.1",
+    "@types/uuid": "^10.0.0",
+    "prisma": "^6.19.3",
+    "supertest": "^7.3.0",
+    "tsx": "^4.23.15",
+    "typescript": "^6.0.3"
+  }
+}

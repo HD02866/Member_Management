@@ -1,0 +1,7 @@
+export enum SystemRole {
+  OWNER = 'OWNER',
+  ADMIN = 'ADMIN',
+  FINANCE_OFFICER = 'FINANCE_OFFICER',
+  VERIFIER = 'VERIFIER',
+  MEMBER = 'MEMBER',
+}

@@ -1,0 +1,208 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dot-background: #ffffff;
+  --dot-color: rgba(15, 23, 42, 0.42);
+  --dot-size: 1.5px;
+  --dot-spacing: 24px;
+  --dot-opacity: 1;
+
+  --background: #ffffff;
+  --foreground: #090d16;
+}
+
+.dark {
+  --dot-background: #000000;
+  --dot-color: rgba(229, 184, 66, 0.78);
+  --dot-size: 1.5px;
+  --dot-spacing: 24px;
+  --dot-opacity: 1;
+
+  --background: #000000;
+  --foreground: #f8fafc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --dot-background: #000000;
+    --dot-color: rgba(229, 184, 66, 0.78);
+    --dot-size: 1.5px;
+    --dot-spacing: 24px;
+    --dot-opacity: 1;
+
+    --background: #000000;
+    --foreground: #f8fafc;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--dot-background);
+  min-height: 100vh;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+}
+
+/* Global decorative dot-field background (clean geometric dots, NO lines, NO grid) */
+.app-dot-bg,
+.app-grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: var(--dot-background);
+  background-image: radial-gradient(
+    circle at center,
+    var(--dot-color) var(--dot-size),
+    transparent calc(var(--dot-size) + 0.5px)
+  );
+  background-size: var(--dot-spacing) var(--dot-spacing);
+  background-position: center;
+  opacity: var(--dot-opacity);
+  transition: background-color 200ms ease, opacity 200ms ease;
+}
+
+/* Ambient CTA / Button Light Glow */
+.cta-glow-wrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cta-glow-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -6px -12px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(79, 70, 229, 0.38) 0%,
+    rgba(59, 130, 246, 0.18) 45%,
+    transparent 75%
+  );
+  filter: blur(14px);
+  border-radius: 9999px;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.75;
+  transition: opacity 180ms ease, transform 180ms ease, filter 180ms ease;
+}
+
+.dark .cta-glow-wrapper::before {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(229, 184, 66, 0.3) 40%,
+    transparent 72%
+  );
+  filter: blur(16px);
+  opacity: 0.7;
+}
+
+.cta-glow-wrapper:hover::before {
+  opacity: 1;
+  transform: scale(1.08);
+  filter: blur(18px);
+}
+
+/* Subtle, performant route entrance transition */
+@keyframes pageFadeIn {
+  from {
+    opacity: 0.88;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.page-enter {
+  animation: pageFadeIn 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Accessible focus styling */
+*:focus-visible {
+  outline: 2px solid #6366f1;
+  outline-offset: 2px;
+}
+
+/* Reduced-motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .page-enter {
+    animation: none !important;
+  }
+
+  .app-dot-bg,
+  .app-grid-bg {
+    transition: none !important;
+  }
+
+  .cta-glow-wrapper::before {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   Clean Dedicated Print Styling for 4Baye Digital Membership ID Card
+   ========================================================================== */
+@media print {
+  @page {
+    size: auto;
+    margin: 12mm;
+  }
+
+  /* Hide navigation, sidebars, headers, dot-grid backgrounds, and action controls */
+  header,
+  nav,
+  aside,
+  footer,
+  .app-dot-bg,
+  .app-grid-bg,
+  .print\\:hidden,
+  [data-print-hidden='true'] {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Isolate and center the print ID card container */
+  .digital-id-print-area {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 10mm 0 !important;
+    page-break-inside: avoid !important;
+  }
+
+  .digital-id-print-card {
+    box-shadow: none !important;
+    border: 1px solid #cbd5e1 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    page-break-inside: avoid !important;
+  }
+}
